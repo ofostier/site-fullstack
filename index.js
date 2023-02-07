@@ -1,38 +1,24 @@
-import express from 'express';
+import express from "express";
 import { MongoClient, ServerApiVersion } from 'mongodb';
-import dotenv from 'dotenv';
-
 const app = express();
 const port = 4000;
 
-dotenv.config();
 
-
-const uri2 = "mongodb+srv://olivier:olivier@cluster0.0dnct0x.mongodb.net/?retryWrites=true&w=majority";
-const uri = process.env.MONGODB_URI || uri2;
+const uri2 = "mongodb+srv://sandy:bw26vKuhJ3bwGOmU@fullstack-mern.ehft6.mongodb.net/?retryWrites=true&w=majority";
+const uri = "mongodb+srv://olivier:olivier@cluster0.0dnct0x.mongodb.net/?retryWrites=true&w=majority";
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true, serverApi: ServerApiVersion.v1 });
 
-
-
-app.get('/hello', (req, res) => {
-    res.send('Hello EXPRESS Worldz!!!!!');
+client.connect(err => {
+  console.log("connecté avec succès à la db")
+  // const collection = client.db("test").collection("devices");
+  // perform actions on the collection object
+  client.close();
 });
 
-
-app.get('/', (_, res) => {
-    client.connect((err, db) => {
-        console.log("Connected successfully to server");
-        if (err ||!db) throw new Error("Connect error to MongoDB");
-
-        const collection = client.db("test").collection("devices");
-        // perform actions on the collection object
-        if(err) throw new Error("Connect error to MongoDB");
-      
-        client.close();
-      });
-});
+app.get("/", (_, res) => {
+    res.send("Hello Express !")
+})
 
 app.listen(port, () => {
-        console.log("server is running on port " + port);
-
+    console.log("serveur démarré avec succès sur le port 4000")
 })
